@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<stdlib.h>
 #include "fila.h"
@@ -45,8 +46,8 @@ Fila *decolar(Fila **comeco){
 }
 
 void getFila(Fila **comeco,Fila **fim){
-	if(*fim == NULL)
-		printf("\nFila vazia!!");
+	if(*comeco == NULL)
+		printf("\nFila vazia!!\n");
 	else{
 		Fila *p = NULL,*tmp;
 		while(p != *comeco){

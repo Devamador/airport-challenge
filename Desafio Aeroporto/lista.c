@@ -1,5 +1,6 @@
 
 #include "lista.h"
+#include "fila.h"
 
 Lista *criar(int cod_aviao,char capitao[]){
 	Lista *aviao = (Lista *)malloc(sizeof(Lista));
@@ -30,45 +31,43 @@ void inserir(Lista **inicio,int cod_aviao,char capitao[]){
 }
 
 void remover(Fila **comeco,Fila **fim,Lista **inicio){
-	Lista *exc = *inicio;
-	int cod;
 	if(*inicio == NULL)
 		printf("\nNenhum aviao no patio!!");
 	else{
+		Lista *ant,*exc = *inicio;
+		int cod,achou = 0;
 		printf("Informe o codigo do aviao: ");
 		scanf("%d",&cod);
-		if(cod == exc->cod){
-			(*inicio) = (*inicio)->prox;
-			exc->prox = NULL;
-			inserirFila(&(*comeco),&(*fim),exc);
-			free(exc);
-			printf("\nAviao na fila pra decolar");	
-		}else{
-			Lista *ant;
+		while(exc != NULL){
+			if(cod == (*inicio)->cod){
+				(*inicio) = (*inicio)->prox;
+				inserirFila(&(*comeco),&(*fim),exc);
+				free(exc);
+				printf("\nAviao na fila pra decolar!!");
+				achou = 1;
+				break;
+			}else if(cod == exc->cod){
+				ant->prox = exc->prox;
+				exc->prox = NULL;
+				inserirFila(&(*comeco),&(*fim),exc);
+				free(exc);
+				achou = 1;
+				printf("\nAviao na fila pra decolar");
+				break;
+				
+			}
+	
 			ant = exc;
 			exc = exc->prox;
-			int achou = 0;
-			while(exc != NULL){
-				if(cod == exc->cod){
-					ant->prox = exc->prox;
-					exc->prox = NULL;
-					inserirFila(&(*comeco),&(*fim),exc);
-					free(exc);
-					achou = 1;
-					printf("\nAviao na fila pra decolar");
-					break;
-				}
-				ant = exc;
-				exc = exc->prox;
-			}
-			if(!achou)
-				printf("\nAviao nao encontrado!!");
-		
 		}
-		
+	
+		if(!achou)
+			printf("\nAviao nao encontrado!!");
 	}
+		
 	printf("\n");	
 }
+
 
 void getPatio(Lista *inicio){
 	if(inicio == NULL)
